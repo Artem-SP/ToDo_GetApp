@@ -1,0 +1,28 @@
+.icon {
+  width: 16px;
+  margin: 0 5px 0 5px;
+}
+
+
+
+td {
+  text-align: center;
+  border-bottom: solid black 1px;
+}
+
+th {
+  text-align: center;
+  border-bottom: solid black 1px;
+}
+
+.col1{
+  width: 50px;
+}
+
+.col2{
+  width: 500px;
+}
+
+.col3{width: 200px;}
+
+.col4{width: 70px;}
