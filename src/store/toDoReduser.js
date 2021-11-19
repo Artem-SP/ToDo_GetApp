@@ -1,6 +1,6 @@
 
 let localStorageData = JSON.parse(localStorage.getItem("toDo"))
-const defaultState = (localStorage ? {toDo: localStorageData} :  {toDo: []})
+const defaultState = (localStorage.length ? {toDo: localStorageData} :  {toDo: []})
 
 const GET_TODO = "GET_TODO";
 const ADD_TODO = "ADD_TODO";

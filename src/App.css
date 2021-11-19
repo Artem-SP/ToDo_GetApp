@@ -1,11 +1,5 @@
-/* table {
-  border-collapse: collapse;
-
-  border: 1px solid grey;
-
-} */
 
 
-tr {
-  border-top: 1 px solid gray;
+body {
+  margin: 30px
 }

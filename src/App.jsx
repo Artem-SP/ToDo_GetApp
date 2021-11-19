@@ -1,22 +1,15 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector} from "react-redux";
 import { AddToDo } from "./components/AddToDo.jsx";
 import { ToDoList } from "./components/ToDoList";
-import { getToDoAction } from "./store/toDoReduser";
 import "./App.css";
 
 function App() {
   const toDo = useSelector((state) => state.toDo.toDo);
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
 
       let localStorageData = JSON.parse(localStorage.getItem("toDo"));
-      console.log(localStorageData);
-      
-
-      // dispatch(getToDoAction(localStorageData));
     }, [null]);
 
   useEffect(() => {

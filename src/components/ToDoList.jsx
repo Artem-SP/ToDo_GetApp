@@ -13,15 +13,9 @@ export const ToDoList = () => {
   const [title, setTitle] = useState("");
   const [modalActive, setModalActive] = useState(false);
   const [toEditeID, setToEditeID] = useState("");
-  const [done, setDone] = useState(false);
-  
+
   const toDo = useSelector((state) => state.toDo.toDo);
   const dispatch = useDispatch();
-
-  console.log(toEditeID);
-
-  console.log(title);
-  console.log(toDo);
 
   const removeToDo = (toDo) => {
     dispatch(removeToDoAction(toDo.id));
@@ -30,7 +24,7 @@ export const ToDoList = () => {
   const changeToDo = (toDo) => {
     const cangeData = {
       toEditeID: toEditeID,
-      title: title
+      title: title,
     };
     dispatch(changeToDoAction(cangeData));
     setModalActive(false);
@@ -38,25 +32,28 @@ export const ToDoList = () => {
   };
 
   const setDoneToDo = (toDo) => {
-    console.log(toDo)
-    console.log(toEditeID)
-    dispatch(setDoneToDoAction(toEditeID))
+    console.log(toDo);
+    console.log(toEditeID);
+    dispatch(setDoneToDoAction(toEditeID));
   };
 
   let toDoList = toDo.map((toDo) => {
     return (
       <tr>
-      <td className="col1">
-
-      <input type="checkbox" id='toDo' onChange={
-        ()=>{setToEditeID(toDo.id)
-        setDoneToDo()}} />
-
-      </td>
-        <td key='`${toDo.id} + ${toDo.title}`' className="col2">
+        <td className="col1">
+          <input
+            type="checkbox"
+            id="toDo"
+            onChange={() => {
+              setToEditeID(toDo.id);
+              setDoneToDo();
+            }}
+          />
+        </td>
+        <td key="`${toDo.id} + ${toDo.title}`" className="col2">
           {toDo.title}
         </td>
-        <td key='`${toDo.id} + ${toDo.expire}`' className="col3">
+        <td key="`${toDo.id} + ${toDo.expire}`" className="col3">
           {toDo.expire}
         </td>
         <td className="col4">
@@ -64,9 +61,8 @@ export const ToDoList = () => {
             className="icon"
             alt="edit"
             src={edit}
-            onClick={
-              () => {
-                setToEditeID(parseInt(toDo.id, 10));
+            onClick={() => {
+              setToEditeID(parseInt(toDo.id, 10));
               setModalActive(true);
             }}
           />
@@ -78,14 +74,13 @@ export const ToDoList = () => {
             onClick={() => removeToDo(toDo)}
           />
         </td>
-        </tr>
- 
+      </tr>
     );
   });
 
   return (
     <>
-       {toDoList}
+      {toDoList}
       <Modal active={modalActive} setActive={setModalActive}>
         <input
           type="text"
