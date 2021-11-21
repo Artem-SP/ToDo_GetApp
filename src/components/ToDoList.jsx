@@ -1,10 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import { removeToDoAction } from "../store/toDoReduser";
-import { changeToDoAction } from "../store/toDoReduser";
-import { setDoneToDoAction } from "../store/toDoReduser";
+import { useState, useEffect, useRef } from "react";
+import { removeToDoActionCreator } from "../store/toDoReduser";
+import { changeToDoActionCreator } from "../store/toDoReduser";
+import { setDoneToDoActionCreator } from "../store/toDoReduser";
 import { Modal } from "./Modal.jsx";
+import { Timer } from "./Timer.jsx";
+
 import edit from "../img/edit.png";
 import del from "../img/delete.png";
 import "./ToDoList.css";
@@ -17,46 +19,53 @@ export const ToDoList = () => {
   const toDo = useSelector((state) => state.toDo.toDo);
   const dispatch = useDispatch();
 
+  const inputElement = useRef(null);
+
+  // useEffect(() => {
+  //   if (inputElement.current) {
+  //     inputElement.current.focus();
+  //   }
+  // }, []);
+
   const removeToDo = (toDo) => {
-    dispatch(removeToDoAction(toDo.id));
+    dispatch(removeToDoActionCreator(toDo.id));
   };
 
-  const changeToDo = (toDo) => {
+  const changeToDo = () => {
     const cangeData = {
       toEditeID: toEditeID,
       title: title,
     };
-    dispatch(changeToDoAction(cangeData));
+    dispatch(changeToDoActionCreator(cangeData));
     setModalActive(false);
     setTitle("");
+    setToEditeID("");
   };
 
-  const setDoneToDo = (toDo) => {
-    console.log(toDo);
-    console.log(toEditeID);
-    dispatch(setDoneToDoAction(toEditeID));
+  const setDoneToDo = (id) => {
+    dispatch(setDoneToDoActionCreator(id));
   };
 
   let toDoList = toDo.map((toDo) => {
     return (
-      <tr>
-        <td className="col1">
+      <tr key={toDo.id + "row"}>
+        <td className="col1" key={toDo.id + "col1"}>
           <input
             type="checkbox"
-            id="toDo"
+            checked={toDo.done}
+            id={toDo.id}
             onChange={() => {
-              setToEditeID(toDo.id);
-              setDoneToDo();
+              setDoneToDo(toDo.id);
             }}
           />
         </td>
-        <td key="`${toDo.id} + ${toDo.title}`" className="col2">
+        <td key={`${toDo.id} + ${toDo.title}`} className="col2">
           {toDo.title}
         </td>
-        <td key="`${toDo.id} + ${toDo.expire}`" className="col3">
+        <td key={`${toDo.id} + ${toDo.expire}`} className="col3">
           {toDo.expire}
         </td>
-        <td className="col4">
+        <td className="col4" key={toDo.id + "col4"}>
           <img
             className="icon"
             alt="edit"
@@ -74,13 +83,30 @@ export const ToDoList = () => {
             onClick={() => removeToDo(toDo)}
           />
         </td>
+        <td className="col5" key={toDo.id + "col5"}>
+          <Timer {...toDo} />
+        </td>
       </tr>
     );
   });
 
   return (
     <>
-      {toDoList}
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>Done</th>
+              <th>ToDo title</th>
+              <th>Expire date</th>
+              <th>Edit/delite</th>
+              <th>Time to finish</th>
+            </tr>
+          </thead>
+          <tbody>{toDoList}</tbody>
+        </table>
+      </div>
+
       <Modal active={modalActive} setActive={setModalActive}>
         <input
           type="text"

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { addToDoAction } from "../store/toDoReduser.js";
+import { addToDoActionCreator } from "../store/toDoReduser.js";
 import "./AddToDo.css";
 
 export const AddToDo = () => {
@@ -11,6 +11,7 @@ export const AddToDo = () => {
   const [disabeled, setDisabeled] = useState(true);
   const [duble, setDuble] = useState(false);
   const [dubleError, setDubleError] = useState(false);
+  const [pastDateError, setPastDateError] = useState(false);
 
   const toDo = useSelector((state) => state.toDo.toDo);
 
@@ -24,7 +25,21 @@ export const AddToDo = () => {
   }, [duble]);
 
   useEffect(() => {
-    if (!title || !expire || duble) {
+    if (Date.parse(expire) - Date.now()) setPastDateError(true);
+  }, [expire]);
+
+  useEffect(() => {
+    if (!title || !expire) {
+      setEmptyError(true);
+      setDisabeled(true);
+    } else {
+      setEmptyError(false);
+      setDisabeled(false);
+    }
+  }, [title, expire]);
+
+  useEffect(() => {
+    if (!title || !expire || duble || pastDateError) {
       setEmptyError(true);
       setDisabeled(true);
     } else {
@@ -33,7 +48,7 @@ export const AddToDo = () => {
     }
   }, [title, expire, duble]);
 
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const addToDo = () => {
     const toDo = {
@@ -42,10 +57,11 @@ export const AddToDo = () => {
       expire: expire,
       done: false,
     };
-    dispatch(addToDoAction(toDo));
+    dispatch(addToDoActionCreator(toDo));
     setTitle("");
     setExpire("");
   };
+
   return (
     <div className="add">
       <div>
@@ -53,6 +69,7 @@ export const AddToDo = () => {
           <input
             type="text"
             value={title}
+            placeholder="Input ToDo title here"
             onChange={(e) => {
               setTitle(e.target.value);
             }}
@@ -77,10 +94,16 @@ export const AddToDo = () => {
               <div style={{ color: "red" }}> Such toDo alredy exist </div>
             )}
           </div>
+
+          <div>
+            {pastDateError && (
+              <div style={{ color: "red" }}> Past date/time selected </div>
+            )}
+          </div>
         </div>
         <div></div>
         <button disabled={disabeled} onClick={() => addToDo()}>
-          Добавить ToDo
+          Add ToDo
         </button>
       </div>
     </div>
