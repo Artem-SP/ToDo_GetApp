@@ -7,9 +7,6 @@ import "./App.css";
 function App() {
   const toDo = useSelector((state) => state.toDo.toDo);
 
-  useEffect(() => {
-    localStorage.setItem("toDo", JSON.stringify(toDo));
-  }, [toDo]);
 
   return (
     <div className="App">

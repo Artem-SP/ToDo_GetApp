@@ -10,6 +10,7 @@ export function Timer(expire) {
 
   const expireStr = expire.expire;
 
+  // timer engine
   const countExpire = () =>
     setInterval(() => {
       let leftMS = Date.parse(expireStr) - Date.now();
@@ -28,7 +29,7 @@ export function Timer(expire) {
 
   useEffect(() => {
     countExpire();
-  }, toDo);
+  }, [toDo]);
 
   return <span>{`${days} d : ${hours} h : ${minutes} m : ${seconds} s`}</span>;
 }

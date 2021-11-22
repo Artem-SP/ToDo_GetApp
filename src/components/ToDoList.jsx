@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { removeToDoActionCreator } from "../store/toDoReduser";
 import { changeToDoActionCreator } from "../store/toDoReduser";
 import { setDoneToDoActionCreator } from "../store/toDoReduser";
@@ -19,14 +19,7 @@ export const ToDoList = () => {
   const toDo = useSelector((state) => state.toDo.toDo);
   const dispatch = useDispatch();
 
-  const inputElement = useRef(null);
-
-  // useEffect(() => {
-  //   if (inputElement.current) {
-  //     inputElement.current.focus();
-  //   }
-  // }, []);
-
+  // add toDo, sange toDo title, mark toDo done dispatchers
   const removeToDo = (toDo) => {
     dispatch(removeToDoActionCreator(toDo.id));
   };
@@ -34,7 +27,7 @@ export const ToDoList = () => {
   const changeToDo = () => {
     const cangeData = {
       toEditeID: toEditeID,
-      title: title,
+      title: title
     };
     dispatch(changeToDoActionCreator(cangeData));
     setModalActive(false);
@@ -46,6 +39,7 @@ export const ToDoList = () => {
     dispatch(setDoneToDoActionCreator(id));
   };
 
+  // toDo elements construct
   let toDoList = toDo.map((toDo) => {
     return (
       <tr key={toDo.id + "row"}>

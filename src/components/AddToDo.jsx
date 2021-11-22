@@ -11,51 +11,47 @@ export const AddToDo = () => {
   const [disabeled, setDisabeled] = useState(true);
   const [duble, setDuble] = useState(false);
   const [dubleError, setDubleError] = useState(false);
-  const [pastDateError, setPastDateError] = useState(false);
+  const [pastDateError, setPastDateError] = useState(true);
 
   const toDo = useSelector((state) => state.toDo.toDo);
 
+  // input values validation
   useEffect(() => {
-    setDuble(toDo.some((it) => it.title == title));
+    setDuble(toDo.some((it) => it.title === title));
     setDubleError(duble);
   }, [title, expire]);
 
   useEffect(() => {
-    setDubleError(duble);
-  }, [duble]);
-
-  useEffect(() => {
-    if (Date.parse(expire) - Date.now()) setPastDateError(true);
+    Date.parse(expire) - Date.now() < 0
+      ? setPastDateError(true)
+      : setPastDateError(false);
   }, [expire]);
 
   useEffect(() => {
     if (!title || !expire) {
       setEmptyError(true);
-      setDisabeled(true);
     } else {
       setEmptyError(false);
-      setDisabeled(false);
     }
   }, [title, expire]);
 
   useEffect(() => {
-    if (!title || !expire || duble || pastDateError) {
-      setEmptyError(true);
+    if (emptyError || dubleError || pastDateError) {
       setDisabeled(true);
     } else {
-      setEmptyError(false);
       setDisabeled(false);
     }
-  }, [title, expire, duble]);
+  }, [emptyError, dubleError, pastDateError]);
 
   const dispatch = useDispatch();
 
+  // addToDo distatcher
   const addToDo = () => {
     const toDo = {
       id: Date.now(),
       title: title,
       expire: expire,
-      done: false,
+      done: false
     };
     dispatch(addToDoActionCreator(toDo));
     setTitle("");
