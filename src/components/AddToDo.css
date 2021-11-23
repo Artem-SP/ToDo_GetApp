@@ -1,3 +1,33 @@
 .add {
-  display: flex;
+  margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
 }
+
+input {
+  font-size: medium;
+  border: none;
+  border-bottom: #566885 solid 3px;
+  background: transparent;
+  width: 100%;
+  padding: 10px;
+}
+input:focus {
+  outline: none;
+  transform: scale(1.01);
+}
+
+button {
+  float: right;
+  height: 40px;
+  width: 200px;
+}
+
+.add__warnings {
+  text-align: right;
+  height: 50px;
+  margin-left: auto;
+  margin-right: auto;
+}
+

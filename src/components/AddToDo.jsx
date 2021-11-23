@@ -51,7 +51,7 @@ export const AddToDo = () => {
       id: Date.now(),
       title: title,
       expire: expire,
-      done: false
+      done: false,
     };
     dispatch(addToDoActionCreator(toDo));
     setTitle("");
@@ -78,7 +78,7 @@ export const AddToDo = () => {
             }}
           />
         </div>
-        <div className="warnings">
+        <div className="add__warnings">
           <div>
             {emptyError && (
               <div style={{ color: "red" }}> Empty fields not allowed </div>
@@ -97,10 +97,11 @@ export const AddToDo = () => {
             )}
           </div>
         </div>
-        <div></div>
+        <div className='add__btnBlock'>
         <button disabled={disabeled} onClick={() => addToDo()}>
           Add ToDo
         </button>
+        </div>
       </div>
     </div>
   );

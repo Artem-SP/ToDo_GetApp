@@ -1,17 +1,21 @@
 import React from "react";
 import "./Modal.css";
 
-export const Modal = ({ active, setActive, children }) => {
+export const Modal = (props) => {
   return (
     <div
-      className={active ? "modal active" : "modal"}
-      onClick={() => setActive(false)}
+      className={`modal__wrapper ${props.isOpened ? "open" : "close"}`}
+      style={{ ...props.style }}
     >
-      <div
-        className={active ? "modal__content active" : "modal_content"}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {children}
+      <div>
+        <div className="modal__body">
+          <div className="modal__close" onClick={props.onModalClose}>
+            ×
+          </div>
+          <h2>{props.title}</h2>
+          <hr />
+          {props.children}
+        </div>
       </div>
     </div>
   );

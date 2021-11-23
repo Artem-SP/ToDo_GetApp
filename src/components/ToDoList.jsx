@@ -13,7 +13,7 @@ import "./ToDoList.css";
 
 export const ToDoList = () => {
   const [title, setTitle] = useState("");
-  const [modalActive, setModalActive] = useState(false);
+  const [modal, setModal] = useState(false);
   const [toEditeID, setToEditeID] = useState("");
 
   const toDo = useSelector((state) => state.toDo.toDo);
@@ -27,10 +27,10 @@ export const ToDoList = () => {
   const changeToDo = () => {
     const cangeData = {
       toEditeID: toEditeID,
-      title: title
+      title: title,
     };
     dispatch(changeToDoActionCreator(cangeData));
-    setModalActive(false);
+    setModal(false);
     setTitle("");
     setToEditeID("");
   };
@@ -60,13 +60,16 @@ export const ToDoList = () => {
           {toDo.expire}
         </td>
         <td className="col4" key={toDo.id + "col4"}>
+          <Timer {...toDo} />
+        </td>
+        <td className="col5" key={toDo.id + "col5"}>
           <img
             className="icon"
             alt="edit"
             src={edit}
             onClick={() => {
               setToEditeID(parseInt(toDo.id, 10));
-              setModalActive(true);
+              setModal(true);
             }}
           />
 
@@ -77,31 +80,32 @@ export const ToDoList = () => {
             onClick={() => removeToDo(toDo)}
           />
         </td>
-        <td className="col5" key={toDo.id + "col5"}>
-          <Timer {...toDo} />
-        </td>
       </tr>
     );
   });
 
   return (
     <>
-      <div>
+      <div className='todoList__body'>
         <table>
           <thead>
             <tr>
               <th>Done</th>
               <th>ToDo title</th>
               <th>Expire date</th>
-              <th>Edit/delite</th>
               <th>Time to finish</th>
+              <th>Edit/delite</th>
             </tr>
           </thead>
           <tbody>{toDoList}</tbody>
         </table>
       </div>
 
-      <Modal active={modalActive} setActive={setModalActive}>
+      <Modal
+        title={"Modal 1 title"}
+        isOpened={modal}
+        onModalClose={() => setModal(false)}
+      >
         <input
           type="text"
           value={title}

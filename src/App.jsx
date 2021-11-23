@@ -7,7 +7,6 @@ import "./App.css";
 function App() {
   const toDo = useSelector((state) => state.toDo.toDo);
 
-
   return (
     <div className="App">
       <AddToDo />

@@ -13,7 +13,7 @@ export const toDoReducer = (state = defaultState, action) => {
     case REMOVE_TODO:
       return {
         ...state,
-        toDo: state.toDo.filter((toDo) => toDo.id !== action.payload)
+        toDo: state.toDo.filter((toDo) => toDo.id !== action.payload),
       };
 
     case CHANGE_TODO:
@@ -24,7 +24,7 @@ export const toDoReducer = (state = defaultState, action) => {
             toDo.title = action.payload.title;
           }
           return toDo;
-        })
+        }),
       };
 
     case SETDONE_TODO:
@@ -35,7 +35,7 @@ export const toDoReducer = (state = defaultState, action) => {
             toDo.done = !toDo.done;
           }
           return toDo;
-        })
+        }),
       };
 
     default:
@@ -46,13 +46,13 @@ export const toDoReducer = (state = defaultState, action) => {
 export const addToDoActionCreator = (payload) => ({ type: ADD_TODO, payload });
 export const changeToDoActionCreator = (payload) => ({
   type: CHANGE_TODO,
-  payload
+  payload,
 });
 export const removeToDoActionCreator = (payload) => ({
   type: REMOVE_TODO,
-  payload
+  payload,
 });
 export const setDoneToDoActionCreator = (payload) => ({
   type: SETDONE_TODO,
-  payload
+  payload,
 });

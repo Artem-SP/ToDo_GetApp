@@ -9,11 +9,11 @@ import storage from "redux-persist/lib/storage";
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = combineReducers({
-  toDo: toDoReducer
+  toDo: toDoReducer,
 });
 const persistConfig = {
   key: "root",
-  storage
+  storage,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
