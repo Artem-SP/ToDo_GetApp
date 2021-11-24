@@ -11,6 +11,7 @@ export function Timer(toDo) {
   const [modal, setModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("title");
 
+  // timer engine
   const countExpire = () =>
     setInterval(() => {
       let leftMS = Date.parse(toDo.expire) - Date.now();
