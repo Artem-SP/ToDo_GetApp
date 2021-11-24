@@ -1,5 +1,5 @@
 
-Used technogies: ReactJS, Redux, Redux-presist
+Used technologies: ReactJS, Redux, Redux-presist
 
 
 
